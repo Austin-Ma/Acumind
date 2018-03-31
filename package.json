@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.5",
+    "@fortawesome/react-fontawesome": "0.0.18",
     "@google-cloud/language": "^1.2.0",
+    "bootstrap": "^4.0.0",
     "express": "^4.16.3",
     "firebase": "^4.12.1",
     "react": "^16.3.0",
-    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "reactstrap": "^5.0.0-beta.3"
   },
   "scripts": {
     "start": "react-scripts start",

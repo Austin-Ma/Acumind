@@ -1,0 +1,15 @@
+.title {
+  font-size: 48px;
+  color: #000000;
+  text-align: center;
+}
+
+.icon-twitter {
+  height: 25px;
+}
+
+.card-small {
+  height: 200px;
+  width: 300px;
+  text-align: center;
+}
