@@ -1,6 +1,12 @@
 {
   "hosting": {
     "public": "no",
+    "rewrites": [
+      {
+        "source": "/analyze",
+        "function": "app"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -10,6 +16,10 @@
   "functions": {
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint"
-    ]
+    ],
+    "source": "functions"
+  },
+  "database": {
+    "rules": "database.rules.json"
   }
 }

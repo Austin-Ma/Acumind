@@ -6,14 +6,14 @@
     <title>Welcome to Firebase Hosting</title>
 
     <!-- update the version number as needed -->
-    <script defer src="/__/firebase/4.12.1/firebase-app.js"></script>
+    <script defer src="..//firebase/4.12.1/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/4.12.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/4.12.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/4.12.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/4.12.1/firebase-storage.js"></script>
+    <script defer src="../firebase/4.12.1/firebase-auth.js"></script>
+    <script defer src="../firebase/4.12.1/firebase-database.js"></script>
+    <script defer src="../firebase/4.12.1/firebase-messaging.js"></script>
+    <script defer src="../firebase/4.12.1/firebase-storage.js"></script>
     <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+    <script defer src="../firebase/init.js"></script>
 
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
@@ -36,6 +36,7 @@
       <h1>Firebase Hosting Setup Complete</h1>
       <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
       <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+      <button id="gcloud"> gcloud Submit </button>
     </div>
     <p id="load">Firebase SDK Loading&hellip;</p>
 
@@ -61,5 +62,8 @@
         }
       });
     </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="../functions/gcloudAuth.js"></script>
+      <script src="../functions/nlpAnalyze.js"></script>
   </body>
 </html>
