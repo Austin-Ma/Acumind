@@ -7,6 +7,8 @@ import {
 import logo from './logo.svg';
 import './App.css';
 
+import Landing from './containers/Landing/Landing.js';
+
 class App extends Component {
   render() {
     return (
@@ -21,7 +23,7 @@ class App extends Component {
           </p>
 
 
-        <Route exact path='/' />
+        <Route exact path='/' component={Landing}/>
 
 
         </div>
