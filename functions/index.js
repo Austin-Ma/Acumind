@@ -19,7 +19,7 @@ const functions = require('firebase-functions');
 
 //Firebase Database 
 var firebase = require('firebase');
-var configFB = fs.readFileSync('../../configFB.json');
+var configFB = fs.readFileSync('configFB.json');
 configFB = JSON.parse(configFB);
 
 var database = firebase.initializeApp(configFB).database();
@@ -57,41 +57,70 @@ app.post("/analyze", (request, response) => {
 	    //console.log(`Sentiment score: ${sentiment.score}`);
 	    //console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
 	  	
-	  	//Analysis Function 
+	    //For loop to add sentimente score to JSON;
+
+
+	  	//Analysis Function, so call sentimentSum and timeCheck
 
 
 	  })
 	  .catch(err => {
 	    console.error('ERROR:', err);
 	  });
+
+
+	//Add to the firebase server of the sentiment sum and the time stamp result
+
 });
 
 //Analysis Functions
-function sentimentSum(JSONArray){
-	//Sum up the overall scores? 
+function sentimentSum(tweetProfileArray){
+	//Sum up the overall scores?
+	var sentimentScore = "sentimentScore";
+	var sentimentSum = 0; 
+	for(var i = 0; i < tweetProfileArray.length; i++){
+		var object = tweetProfileArray[i];
+		for(var sentimentScore in object){
+			var key = sentimentScore;
+			sentimentSum = sentimentSum + object[key];
+		}
+	}
 
+	return sentimentSum;
 }
 
-//Add the sentiment result to the database
+//Checking time stamp
+function timeCheck(tweetProfileArray){
+	//Compute the percentage of the amount of tweets in bad time
+	var timestamp = "timestamp";
+	var timeAvg = 0; 
+	for(var i = 0; i < tweetProfileArray.length; i++){
+		var object = tweetProfileArray[i];
+		for(var timestamp in object){
+			var key = timestamp;
+			timeAvg = timeAvg + object[key];
+		}
+	}
+
+	return timeAvg / tweetProfileArray.length;
+}
+
+//Add the sentiment/timeAvg result to the database
 app.get("/addData", (request, response) => {
 	//Write to firebase 
 
-})
+});
 
-app.get("/addData", returnValue)
-
-function returnValue(request, response){
-
-}
-
-app.get("/addData", function returnValue(request, response){
+app.get("/getData/:userID", (request, response) => {
+	//Check the reference and then return the data.  
 
 });
 
 //Clear the tree for the next user 
-app.get("clearData", (request, response) => {
-
-})
+app.get("/clearData", (request, response) => {
+	var reference = database.ref('/');
+	reference.remove();
+});
 
 exports.app = functions.https.onRequest(app);
 

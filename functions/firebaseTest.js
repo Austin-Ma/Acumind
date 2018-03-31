@@ -3,16 +3,16 @@ var fs = require('fs');
 
 //Firebase Database 
 var firebase = require('firebase');
-var configFB = fs.readFileSync('../../configFB.json');
+var configFB = fs.readFileSync('configFB.json');
 configFB = JSON.parse(configFB);
 
 var database = firebase.initializeApp(configFB).database();
 
-var data = {
-	score: 100,
-	name: "William"
-}
+//var data = {
+//	score: 100,
+//	name: "William"
+//}
 
 var reference = database.ref('/');
 
-reference.push(data);
+reference.remove();
