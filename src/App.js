@@ -7,11 +7,25 @@ import {
 import logo from './logo.svg';
 import './App.css';
 
+import Landing from './containers/Landing/Landing.js';
+import Results from './containers/Results/Results.js';
+
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="App">
+          <Route exact path='/' component={Landing} />
+          <Route path='/results' component={Results} />
+        </div>
+      </Router>
+    );
+  }
+}
+
+export default App;
+
+/*
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to React</h1>
@@ -20,17 +34,7 @@ class App extends Component {
             To get started, edit <code>src/App.js</code> and save to reload.
           </p>
 
-
-        <Route exact path='/' />
-
-
-        </div>
-      </Router>
-    );
-  }
-}
-
-export default App;
+*/
 
 /*
           <ul>
