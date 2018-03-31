@@ -1,0 +1,62 @@
+[33mcommit 93337df17b1cdc66d09718d450f6c80b1cba9387[m
+Merge: 535524c 7b01608
+Author: Willievuong <willievuong@gmail.com>
+Date:   Sat Mar 31 13:27:01 2018 -0700
+
+    Merge branch 'master' of https://github.com/Austin-Ma/Acumind
+
+[33mcommit 535524c1aae56af58cb7dbbdc019fb44f0737bbb[m
+Author: Willievuong <willievuong@gmail.com>
+Date:   Sat Mar 31 13:26:56 2018 -0700
+
+    Uhm, a lot of node packages
+
+[33mcommit 7b01608bb7b793916cc1a7fe1b6dcb3482abce90[m
+Author: Alex Zhao <alexzhao21@gmail.com>
+Date:   Sat Mar 31 03:54:17 2018 -0700
+
+    Add reactstrap
+
+[33mcommit 9ea73d5644b41775780f75e08a53424554e39832[m
+Merge: 63aea86 4b40af7
+Author: Alex Zhao <alexzhao21@gmail.com>
+Date:   Sat Mar 31 03:01:25 2018 -0700
+
+    Merge branch 'master' of https://github.com/Austin-Ma/Acumind
+
+[33mcommit 63aea86ca9afa6996cacb30836ceaa2d98673c65[m
+Author: Alex Zhao <alexzhao21@gmail.com>
+Date:   Sat Mar 31 03:00:59 2018 -0700
+
+    Landing page framework
+
+[33mcommit 4b40af7b348581d8fe1391c6c01783a4b69933a7[m
+Merge: c58523f 8295c16
+Author: Willievuong <willievuong@gmail.com>
+Date:   Sat Mar 31 02:57:16 2018 -0700
+
+    Resolving package.json merge conflict
+
+[33mcommit c58523f11dbbebec203cd6629aa7cc153f15cdc1[m
+Author: Willievuong <willievuong@gmail.com>
+Date:   Sat Mar 31 02:53:42 2018 -0700
+
+    Firebase, Express packages, Google Cloud NLP Package
+
+[33mcommit 8295c16a03d5645ababa590666000eeb98f85366[m
+Author: Alex Zhao <alexzhao21@gmail.com>
+Date:   Sat Mar 31 02:42:56 2018 -0700
+
+    Add react bootstrap as a dependency
+
+[33mcommit a4478f2a41c82aa7a23a29ae85e43090288a2b30[m
+Author: Alex Zhao <alexzhao21@gmail.com>
+Date:   Sat Mar 31 02:27:51 2018 -0700
+
+    Add router skeleton
+
+[33mcommit a5d60f78c41e6cce5948a20f553b2e3c832886b5[m
+Author: Alex Zhao <alexzhao21@gmail.com>
+Date:   Sat Mar 31 02:11:20 2018 -0700
+
+    Initial react commit
