@@ -59,6 +59,23 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original').on
   return event.data.ref.parent.child('uppercase').set(uppercase);
 });
 
+exports.addData = functions.database.ref('/userID/{id}/{timeScore}/{sentimentScore}').onWrite((event) => {
+	var userVal = {
+		"timeCheck": events.params.timeScore,
+		"sentiment": events.params.sentimentScore
+	}
+
+	return admin.database().ref("/userID/" + events.params.id + "/").push(userVal);
+})
+
+exports.getData = functions.database.ref("/getData/{userID}").onWrite((event) => {
+	//Check the reference and then return the data.
+	var userID = event.params.userID; 
+
+	admin.database().ref("/userID/" + userID).on("value", (data) => {var object = data.val()
+		response.send(object);}, errData);
+});
+
 //Clear the tree for the next user 
 exports.clearData = functions.https.onRequest((req, res) => {
 	console.log("Removing all Data");
@@ -66,7 +83,7 @@ exports.clearData = functions.https.onRequest((req, res) => {
 })
 
 
-app.post("/analyze", (request, response) => {
+exports.analyze = functions.https.onRequest((request, response) => {
 	var score = 0; 
 	var data = requests.body; 
 	var text; 
@@ -74,7 +91,7 @@ app.post("/analyze", (request, response) => {
 	var arrayLength = data.length;
 	var userID = data[arrayLength].id;  
 
-	for(var i = 0; i < data.length-1; i++){
+	for(var i = 0; i < data.length - 1; i++){
 		//Send to the router dealing w/ sentiment analysis 
 		var documents = {
 			'text': data[i].text, 
@@ -107,55 +124,17 @@ app.post("/analyze", (request, response) => {
 		});
 }
 
-timeIndex = timeIndex/(data.length-1);
+	timeIndex = timeIndex/(data.length-1);
 
-addData(userID, score, timeIndex); 
-
-});
-
-//TODO: add change to route with userID for firebase 
-function addData(userID, sentimentScore, timeCheck){
-	var stringScore = "sentimentScore";
-	var timeString = "timeCheck"; 
-
-	var data = {
-		stringScore:sentimentScore, 
-		timeString:timeCheck
+	var userInfo = {
+		"stringScore": score, 
+		"timeString": timeIndex
 	};
 
-	database.push(data); 
-}
-
-app.get("/getData/:userID", (request, response) => {
-	//Check the reference and then return the data.
-	var data = request.params; 
-	var userID = data.userID; 
-
-	//go into firebase database and get the json corresponding
-	var ref = database.reference("/" + userID); 
-
-	ref.on("value", (data) => { 
-		var userData = data.val();
-		response.send(userData);
-	 }, errData);
-
-});
-
-// //Clear the tree for the next user 
-// app.get("/clearData", (request, response) => {
-// 	var reference = database.ref('/');
-// 	reference.remove();
-// });
-
-app.get("/sham", (request, response) =>{
-	var stuff = {
-		"score": 100,
-		"name": "shannon"
-	}
-
-	database.push(stuff);
+	return admin.database().ref('/userID').push(userInfo).then((snapshot) => {
+    // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+    return res.redirect(303, snapshot.ref);
+  	});
 });
 
 exports.app = functions.https.onRequest(app);
-
-
