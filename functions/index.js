@@ -12,20 +12,6 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp((functions.config().firebase));
 
-
-//Firebase Database 
-var firebase = require('firebase');
-configFB = {
-    "apiKey": "AIzaSyB4PUAFq_N-I5Ewt6ThvLOF8Squ0tCV0_U",
-    "authDomain": "acumind-f0e34.firebaseapp.com",
-    "databaseURL": "https://acumind-f0e34.firebaseio.com",
-    "projectId": "acumind-f0e34",
-    "storageBucket": "acumind-f0e34.appspot.com",
-    "messagingSenderId": "1010008784476"
-  };
-
-var database = firebase.initializeApp(configFB).database();
-
 //Ibm stuff 
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 //var ibmConfig = "ibmCredential.json";
