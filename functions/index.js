@@ -45,14 +45,23 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original').on
   return event.data.ref.parent.child('uppercase').set(uppercase);
 });
 
-exports.addData = functions.database.ref('/userID/{id}/{timeScore}/{sentimentScore}').onWrite((event) => {
+// exports.addData = functions.https.onRequest((request, response) => {
+// 	var userVal = {
+// 		"timeCheck": request.params.timeScore,
+// 		"sentiment": request.params.sentimentScore
+// 	}
+
+// 	return admin.database().ref("/userID/" + request.params.id + "/").push(userVal);
+// });
+
+exports.addData = functions.database.ref('/addData/{id}/{timeScore}/{sentimentScore}').onWrite((event) => {
 	var userVal = {
 		"timeCheck": events.params.timeScore,
 		"sentiment": events.params.sentimentScore
 	}
 
-	return admin.database().ref("/userID/" + events.params.id + "/").push(userVal);
-})
+	return admin.database().ref("/" + events.params.id + "/").push(userVal);
+});
 
 exports.getData = functions.database.ref("/getData/{userID}").onWrite((event) => {
 	//Check the reference and then return the data.
