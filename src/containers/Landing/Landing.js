@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Container, Jumbotron } from 'reactstrap';
+import { Button, Container, Jumbotron, Navbar, Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import './Landing.css';
 
-import twitterLogo from '../../assets/twitter.svg';
 //import axios from 'axios';
 import Auth from '../../components/Auth/Auth.js';
+import AcuNav from '../../components/AcuNav/AcuNav.js';
 
 class Landing extends Component {
   constructor(props) {
@@ -61,9 +61,7 @@ class Landing extends Component {
     if (this.state.isLoggedIn) return (<Redirect to="/results" />)
     else return (
       <div>
-        <div className="social-media-container clearfix">
-          <img className="twitter" src={twitterLogo} alt="Twitter" />
-        </div>
+        <AcuNav isResultsPage={false} onClick={() => {this.authenticate()}}/>
 
         <Jumbotron fluid>
           <Container fluid>

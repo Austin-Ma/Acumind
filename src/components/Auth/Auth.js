@@ -44,11 +44,14 @@ class Auth {
   logout() {
     // Clear Access Token and ID Token from local storage
     localStorage.removeItem('access_token');
+    localStorage.removeItem('auth0_accesstoken');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     localStorage.removeItem('user_id');
     // navigate to the home route
     //history.replace('/home');
+    window.location='/';
+    console.log("logged out");
   }
 
   isAuthenticated() {

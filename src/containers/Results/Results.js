@@ -4,6 +4,8 @@ import axios from 'axios';
 import './Results.css';
 
 import LoadingModal from '../../components/LoadingModal/LoadingModal.js';
+import AcuNav from '../../components/AcuNav/AcuNav.js';
+import Auth from '../../components/Auth/Auth.js';
 
 class Results extends Component {
   constructor(props) {
@@ -25,9 +27,15 @@ class Results extends Component {
       })
   }
 
+  logout() {
+    const auth = new Auth();
+    auth.logout();
+  }
+
   render() {
     return (
       <div className="results">
+        <AcuNav isResultsPage={true} onClick={() => {this.logout()}} />
         <h1>[RESULT]</h1>
         <h2>{this.state.userID}</h2>
         <div className="results-buttons">
