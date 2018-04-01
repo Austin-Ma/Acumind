@@ -17,6 +17,7 @@ def work():
 
 
     user_id = request.form.get('user_id')
+    print(user_id)
     access_token = request.form.get('access_token')
     access_token_secret = request.form.get('access_token_secret')
     #POST request Twitter for Token and secret, then they send it back to us
