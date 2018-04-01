@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Landing from './containers/Landing/Landing.js';
 import Results from './containers/Results/Results.js';
+import Callback from './containers/Callback/Callback.js';
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
         <div className="App">
           <Route exact path="/" component={Landing} />
           <Route path="/results" component={Results} />
+          <Route path="/twittercallback" component={Callback} />
         </div>
       </Router>
     );
@@ -18,3 +20,5 @@ class App extends Component {
 }
 
 export default App;
+
+// (/:expires_in)(/:token_type)(/:state)(/:id_token)

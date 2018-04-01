@@ -1,42 +1,62 @@
 import React, { Component } from 'react';
-
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Button
-} from 'reactstrap';
-
-import twitterLogo from '../../assets/twitter.svg';
-
+import { Button, Container } from 'reactstrap';
 import './Landing.css';
 
+import twitterLogo from '../../assets/twitter.svg';
+//import axios from 'axios';
+import Auth from '../../components/Auth/Auth.js';
+
 class Landing extends Component {
+  authenticate() {
+    const auth = new Auth();
+    auth.login();
+
+    /*
+    console.log("hi")
+    const postData = {
+      oauth_callback: "http://localhost:3000/twittercallback"
+    };
+    const auth = "OAuth oauth_consumer_key="\"" + 
+
+    axios.post("https://api.twitter.com/oauth/request_token", postData, {
+      headers: {
+        "Authorization": 
+      }
+    })
+      .then(res => {
+        const redirectURL = "https://api.twitter.com/oauth/authenticate?oauth_token=" + res.data.oauth_token;
+        window.location = redirectURL;
+      }).catch(error => {
+        console.log(error);
+      })
+      */
+  }
+
   render() {
     return (
       <div>
-        <img className="twitter" src={twitterLogo} align="right" alt="" />
-        <h1>Accumind</h1>
-        <Card>
-          <CardImg
-            top
-            width="70%"
-            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"
-            alt="Card"
-          />
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </CardText>
-            <Button color="primary">Login to Twitter</Button>
-          </CardBody>
-        </Card>
+        <div className="social-media-container clearfix">
+          <img className="twitter" src={twitterLogo} alt="" />
+        </div>
+
+        <div className="main-title-container">
+          <h1 className="main-title text-center ">Accumind</h1>
+        </div>
+
+        <div>
+          <Container fluid>
+            <div className="description">
+              <p className="lead">
+                A chat visualizer generating data visualization and gives mental
+                health results.
+              </p>
+            </div>
+          </Container>
+        </div>
+
+        <div className="button-container">
+          <Button color="primary" onClick={() => {this.authenticate()}}>Login to Twitter</Button>
+        </div>
       </div>
     );
   }
