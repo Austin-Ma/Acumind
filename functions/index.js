@@ -65,19 +65,44 @@ exports.addData = functions.database.ref('/addData/{id}/{timeScore}/{sentimentSc
 	return admin.database().ref("/" + events.params.id + "/").push(userVal);
 });
 
+exports.getDataAlt = functions.https.onRequest((req, res) => {
+	return cors(req, res, () => {
+		var userID = req.query.userID; 
+		var object;
+
+		console.log(req.query.userID);
+		//console.log("HELLO!!!!");
+
+		var booya = {
+			"name": "william",
+			"score": 1000
+		}
+
+		//res.send(booya);
+		//return "MESSAGE";
+ 		//return admin.database().ref('/' + userID).once("value", (data) => {res.send(data);});
+		 admin.database().ref('/' + userID).once("value", (data) => {res.send(data);});
+		
+		//admin.database().ref("/userID/" + userID).on("value", (data) => {var object = data.val()
+		//	response.send(object);}, errData);
+	});
+});
+
 exports.getData = functions.database.ref("/getData/{userID}").onWrite((event) => {
+	cors(req, res, () => {
 	//Check the reference and then return the data.
 	var userID = event.params.userID; 
 
 	admin.database().ref("/userID/" + userID).on("value", (data) => {var object = data.val()
 		response.send(object);}, errData);
+	});
 });
 
 //Clear the tree for the next user 
 exports.clearData = functions.https.onRequest((req, res) => {
 	console.log("Removing all Data");
 	return admin.database().ref('/').remove();
-})
+});
 
 
 exports.analyze = functions.https.onRequest((request, response) => {
