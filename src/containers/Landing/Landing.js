@@ -1,12 +1,37 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { Button } from 'reactstrap';
-
-import twitterLogo from '../../assets/twitter.svg';
-
+import { Button, Container } from 'reactstrap';
 import './Landing.css';
 
+import twitterLogo from '../../assets/twitter.svg';
+//import axios from 'axios';
+import Auth from '../../components/Auth/Auth.js';
+
 class Landing extends Component {
+  authenticate() {
+    const auth = new Auth();
+    auth.login();
+
+    /*
+    console.log("hi")
+    const postData = {
+      oauth_callback: "http://localhost:3000/twittercallback"
+    };
+    const auth = "OAuth oauth_consumer_key="\"" + 
+
+    axios.post("https://api.twitter.com/oauth/request_token", postData, {
+      headers: {
+        "Authorization": 
+      }
+    })
+      .then(res => {
+        const redirectURL = "https://api.twitter.com/oauth/authenticate?oauth_token=" + res.data.oauth_token;
+        window.location = redirectURL;
+      }).catch(error => {
+        console.log(error);
+      })
+      */
+  }
+
   render() {
     return (
       <div>
@@ -30,7 +55,7 @@ class Landing extends Component {
         </div>
 
         <div className="button-container">
-          <Button color="primary">Login to Twitter</Button>
+          <Button color="primary" onClick={() => {this.authenticate()}}>Login to Twitter</Button>
         </div>
       </div>
     );
