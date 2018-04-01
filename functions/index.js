@@ -50,7 +50,8 @@ app.post("/analyze", (request, response) => {
 	var data = requests.body; 
 	var text; 
 	var timeCheck = 0;
-	var userID = data[data.length].id;  
+	var arrayLength = data.length;
+	var userID = data[arrayLength].id;  
 
 	for(var i = 0; i < data.length-1; i++){
 		//Send to the router dealing w/ sentiment analysis 
@@ -99,7 +100,7 @@ timeCheck = timeCheck/(data.length-1);
 
 });
 
-//Analysis Functions
+/*//Analysis Functions
 function sentimentSum(tweetProfileArray){
 	//Sum up the overall scores?
 	var sentimentScore = "sentimentScore";
@@ -114,25 +115,26 @@ function sentimentSum(tweetProfileArray){
 
 	return sentimentSum;
 }
+*/
 
 //Checking time stamp
-function timeCheck(tweetProfileArray){
-	//Compute the percentage of the amount of tweets in bad time
-	var timestamp = "timestamp";
-	var timeAvg = 0; 
-	for(var i = 0; i < tweetProfileArray.length; i++){
-		var object = tweetProfileArray[i];
-		for(var timestamp in object){
-			var timeInt = parseInt(object[key]); 
-			if(timeInt >= 0 && timeInt <= 4){
-				var key = timestamp;
-				timeAvg = timeAvg + timeInt; 
-			}
-		}
-	}
+// function timeCheck(tweetProfileArray){
+// 	//Compute the percentage of the amount of tweets in bad time
+// 	var timestamp = "timestamp";
+// 	var timeAvg = 0; 
+// 	for(var i = 0; i < tweetProfileArray.length; i++){
+// 		var object = tweetProfileArray[i];
+// 		for(var timestamp in object){
+// 			var timeInt = parseInt(object[key]); 
+// 			if(timeInt >= 0 && timeInt <= 4){
+// 				var key = timestamp;
+// 				timeAvg = timeAvg + timeInt; 
+// 			}
+// 		}
+// 	}
 
-	return timeAvg / tweetProfileArray.length;
-}
+// 	return timeAvg / tweetProfileArray.length;
+// }
 
 // //Add the sentiment/timeAvg result to the database
 // app.get("/addData/:userID/:sentimentTotal/:timeCheck", (request, response) => {
