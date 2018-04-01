@@ -24,10 +24,15 @@ configFB = JSON.parse(configFB);
 
 var database = firebase.initializeApp(configFB).database();
 
-// Imports the Google Cloud client library
-const language = require('@google-cloud/language');
-// Instantiates a client
-const client = new language.LanguageServiceClient();
+//Ibm stuff 
+var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+//var ibmConfig = "ibmCredential.json";
+var natural_language_understanding = new NaturalLanguageUnderstandingV1({
+  "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+  "username": "6ec8f989-fec4-4b3d-8fc1-aeafd018a733",
+  "password": "06HybEjwcVeb",
+  "version": '2018-03-16'
+});
 
 app.listen(3000, (response) => {
 	console.log("Listening on port 3000");
@@ -39,36 +44,57 @@ app.use(express.static('../no'));
 //Definitely need to change this later; 
 //The current route is configured for a single tweet, 
 //Need to configure for an array; 
+
 app.post("/analyze", (request, response) => {
-	var text = request.body.tweet; 
-	var timestamp = parseInt(request.body.timestamp);
+	var score = 0; 
+	var data = requests.body; 
+	var text; 
+	var timeCheck = 0;
+	var userID = data[data.length].id;  
 
-	//Send to the router dealing w/ sentiment analysis 
-	var documents = {
-		content: text, 
-		type: 'PLAIN_TEXT',
-	};
+	for(var i = 0; i < data.length-1; i++){
+		//Send to the router dealing w/ sentiment analysis 
+		var documents = {
+			'text': data[i].text, 
+			'feature': {
+				'keywords': {
+					'sentiment': true, 
+					'limit': 1
+				}
+			}
+		};
 
-	// Detects the sentiment of the text
-	client.analyzeSentiment({document: document}).then(results => {
-	    const sentiment = results[0].documentSentiment;
+		//TODO
+		//make sure to retrieve timestamp //data[i].created_at
+		//concatenate string to get time only
+		//timeAvg = 
 
-	    //console.log(`Text: ${text}`);
-	    //console.log(`Sentiment score: ${sentiment.score}`);
-	    //console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
-	  	
-	    //For loop to add sentimente score to JSON;
+
+		// Detects the sentiment of the text
+		natural_language_understanding.analyze(documents, (err, response) => {
+		  if (err)
+		    console.log('error:', err);
+		  else{
+		  	// console.log((response.keyword.sentiment.score, null, 2));
+		  	score = score + response.keyword.sentiment.score; 
+		  	timeCheck = timeCheck + data[i].created_at; 
+		  }
+		});
+
+addData(userID, score, timeCheck); 
+}
+
+
+
+timeCheck = timeCheck/(data.length-1); 
+
+//For loop to add sentimente score to JSON;
 
 
 	  	//Analysis Function, so call sentimentSum and timeCheck
 
 
-	  })
-	  .catch(err => {
-	    console.error('ERROR:', err);
-	  });
-
-
+	 
 	//Add to the firebase server of the sentiment sum and the time stamp result
 
 });
@@ -147,4 +173,5 @@ app.get("/clearData", (request, response) => {
 });
 
 exports.app = functions.https.onRequest(app);
+
 
