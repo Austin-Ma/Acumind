@@ -17,7 +17,7 @@ class Landing extends Component {
 
   authenticate() {
     const auth = new Auth();
-    if (localStorage.getItem("twitter_accesstoken") === undefined) {
+    if (localStorage.getItem("auth0_accesstoken") === null) {
       // first time login
       console.log("first time login");
       auth.login();

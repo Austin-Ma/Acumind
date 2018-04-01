@@ -4,7 +4,10 @@ import tweepy
 import json
 from flask import Flask
 from flask import request
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/', methods=['POST'])
 def work():
@@ -14,11 +17,8 @@ def work():
 
 
     user_id = request.form.get('user_id')
-    print(user_id)
     access_token = request.form.get('access_token')
-    print(access_token)
     access_token_secret = request.form.get('access_token_secret')
-    print(access_token_secret)
     #POST request Twitter for Token and secret, then they send it back to us
 
 
