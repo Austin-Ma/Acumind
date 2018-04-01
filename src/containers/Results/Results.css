@@ -12,7 +12,7 @@ h3 {
 }
 
 .results-jumbotron {
-    height: 8em;
+    display: flex;
 }
 
 .results {

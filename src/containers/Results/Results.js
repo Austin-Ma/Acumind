@@ -46,14 +46,14 @@ class Results extends Component {
   render() {
     var result;
     switch (this.state.onDisplay) {
-      case 1:
-        result = <div></div>;
+      case 1: //personality traits 
+        result = <div><br /><Alert color="secondary">Some relevant personality traits that were detected include: sadness, fear, anxiety</Alert></div>;
         break;
-      case 2:
-        result = <div></div>;
+      case 2: ////sentiment analysis
+        result = <div><br /><Alert color="secondary">You seem to tend towards more negative thoughts in your tweets.</Alert></div>;
         break;
-      case 3:
-        result = <div></div>;
+      case 3:////timestamp 
+        result = <div><br /><Alert color="secondary">You appear to be most active around <b>3 am</b>.</Alert></div>;
         break;
       default:
         result = <div><br /><Alert color="info">Click on any of the images to see a more detailed breakdown.</Alert></div>;
@@ -68,7 +68,8 @@ class Results extends Component {
           <Row>
             <Col md="12">
               <Jumbotron className="results-jumbotron">
-                <h3 className="results">Results</h3>
+                <h3><b>You may be at a high risk for depression or another mental health disorder.</b></h3>
+                <h4>While these results are by no means conclusive, they suggest that you should seek further council from a mental health provider.</h4>
               </Jumbotron>
             </Col>
           </Row>
