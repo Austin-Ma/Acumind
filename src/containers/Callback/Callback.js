@@ -15,18 +15,6 @@ class Callback extends Component {
     const auth = new Auth();
     if (/access_token|id_token|error/.test(this.props.location.hash)) {
       auth.handleAuthentication();
-/*
-
-      const authHead = "Bearer " + localStorage.getItem("access_token");
-
-      const userID = auth.getUserID();
-      axios.get("https://acumind.auth0.com/api/v2/users/" + userID, {
-        headers: {
-          "Authorization": authHead
-        }
-      })
-
-*/
     } else {
       // we goofed somehow
       console.log(this.props.location.hash.slice(this.props.location.hash.indexOf("error")))
@@ -52,6 +40,8 @@ class Callback extends Component {
       }).then(res2 => {
         const result = res2.data.identities[0];
 
+        localStorage.setItem("user_id", result.user_id);
+
         var bodyFormData = new FormData();
         bodyFormData.set("user_id", result.user_id);
         bodyFormData.set("access_token", result.access_token);
@@ -63,9 +53,9 @@ class Callback extends Component {
           }
         }).then(res => {
           console.log(res.data);
-          this.state = {
+          this.setState({
             isServering: false
-          }
+          });
         })
       })
     })
@@ -119,8 +109,6 @@ class Callback extends Component {
 
     }
     */
-
-
   }
 
   getAccessToken(hash) {

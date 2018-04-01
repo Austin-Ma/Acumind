@@ -1,5 +1,5 @@
 import auth0 from 'auth0-js';
-import history from '../../history.js';
+//import history from '../../history.js';
 
 class Auth {
   auth0 = new auth0.WebAuth({
@@ -34,6 +34,7 @@ class Auth {
     // Set the time that the Access Token will expire at
     let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('auth0_accesstoken', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     // navigate to the home route
@@ -45,6 +46,7 @@ class Auth {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('user_id');
     // navigate to the home route
     //history.replace('/home');
   }

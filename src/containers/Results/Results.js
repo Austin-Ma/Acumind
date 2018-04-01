@@ -12,15 +12,16 @@ class Results extends Component {
       isLoading: true // handles the displaying of the modal
     };
 
-    axios.get("localhost:3000/getData/" + localStorage.getItem("twitter_accesstoken"))
+    axios.get("https://acumind-f0e34.firebaseapp.com/getData/" + localStorage.getItem("user_id"))
       .then(res => {
-        this.setState({
+        console.log(res.data);
+        this.state = {
           data: res.data,
           isLoading: false
-        });
+        };
       }).catch(error => {
         console.log(error);
-        
+        // stuck forever in a loading screen :(
       })
   }
 

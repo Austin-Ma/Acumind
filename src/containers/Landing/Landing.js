@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Container } from 'reactstrap';
+import { Button, Container, Jumbotron } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import './Landing.css';
 
@@ -65,20 +65,18 @@ class Landing extends Component {
           <img className="twitter" src={twitterLogo} alt="Twitter" />
         </div>
 
-        <div className="main-title-container">
-          <h1 className="main-title text-center">Acumind</h1>
-        </div>
-
-        <div>
+        <Jumbotron fluid>
           <Container fluid>
+            <div className="main-title-container">
+              <h1 className="main-title text-center">Acumind</h1>
+            </div>
             <div className="description">
               <p className="lead">
-                A chat visualizer generating data visualization and gives mental
-                health results.
+                Estimating your mental health through your online presence.
               </p>
             </div>
           </Container>
-        </div>
+        </Jumbotron>
 
         <div className="button-container">
           <Button color="primary" onClick={() => {this.authenticate()}}>Check My Mental Health</Button>
