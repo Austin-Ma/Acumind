@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Container, Jumbotron, Row, Col } from 'reactstrap';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Button, Container, Jumbotron, Row, Col, Alert } from 'reactstrap';
 import axios from 'axios';
 import './Results.css';
 
@@ -36,45 +35,58 @@ class Results extends Component {
   }
 
   render() {
+    var result;
+    switch (this.state.onDisplay) {
+      case 0: result = <div><br /><Alert color="info">Click on any of the images to see a more detailed breakdown.</Alert></div>; break;
+      case 1: result = ""; break;
+      case 2: result = ""; break;
+      case 3: result = ""; break;
+      default: result = "";
+    }
+
     return (
 
       <div>
         <AcuNav isResultsPage={true} onClick={() => {this.logout()}} />
 
-        <Jumbotron fluid className="results-jumbotron">
-          <h3 className="results">Results</h3>
-        </Jumbotron>
-
-        <Container>
+        <Container className="result-container">
           <Row>
-            <Col xs="4">
+            <Col md="12">
+              <Jumbotron className="results-jumbotron">
+                <h3 className="results">Results</h3>
+              </Jumbotron>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col md="4">
               <NewCard
                 cardImgSrc="https://i.imgur.com/U024Hop.png"
                 cardTitle="Personality Traits"
               />
             </Col>
-            <Col xs="4">
+            <Col md="4">
               <NewCard
                 cardImgSrc="https://i.imgur.com/u12hID9.png"
                 cardTitle="Sentiment Analysis"
               />
             </Col>
-            <Col xs="4">
+            <Col md="4">
               <NewCard
                 cardImgSrc="https://i.imgur.com/EYEzCsa.png"
                 cardTitle="Time-of-day Analysis"
               />
             </Col>
           </Row>
-        </Container>
 
-        <div className="category-info">
-          {return (this.state.onDisplay === 0) ? "" : null}
-          {return (this.state.onDisplay === 1) ? "" : null}
-          {return (this.state.onDisplay === 2) ? "" : null}
-          {return (this.state.onDisplay === 3) ? "" : null}
-        </div>
-        
+          <Row>
+            <Col md="12">
+              <div className="category-info">
+                {result}
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
     )
   }
