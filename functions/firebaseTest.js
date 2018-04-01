@@ -8,18 +8,16 @@ configFB = JSON.parse(configFB);
 
 var database = firebase.initializeApp(configFB).database();
 
-<<<<<<< HEAD:functions/testJS/firebaseTest.js
 var data = {
-	score: 123,
-	name: "SHannoon"
+	sentimentScore: 0.25,
+	timeAverage: 12
 }
-=======
-//var data = {
-//	score: 100,
-//	name: "William"
-//}
->>>>>>> 869ebb9f9cc349881ee35573b51022c726e21938:functions/firebaseTest.js
+
 
 var reference = database.ref('/');
 
-reference.remove();
+// reference.remove();
+reference.push(data, callback);
+function callback(response){
+	console.log("success");
+}

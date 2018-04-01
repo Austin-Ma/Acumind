@@ -97,22 +97,46 @@ function timeCheck(tweetProfileArray){
 	for(var i = 0; i < tweetProfileArray.length; i++){
 		var object = tweetProfileArray[i];
 		for(var timestamp in object){
-			var key = timestamp;
-			timeAvg = timeAvg + object[key];
+			var timeInt = parseInt(object[key]); 
+			if(timeInt >= 0 && timeInt <= 4){
+				var key = timestamp;
+				timeAvg = timeAvg + timeInt; 
+			}
 		}
 	}
 
 	return timeAvg / tweetProfileArray.length;
 }
 
-//Add the sentiment/timeAvg result to the database
-app.get("/addData", (request, response) => {
-	//Write to firebase 
+// //Add the sentiment/timeAvg result to the database
+// app.get("/addData/:userID/:sentimentTotal/:timeCheck", (request, response) => {
+// 	var sentimentTotal = sentimentSum(tweetProfileArray); 
+// 	var timeCheck = timeCheck(tweetProfileArray); 
 
-});
+// 	var result = [sentimentTotal, timeCheck]; 
+// 	database.push(result); 
+// });
 
+//TODO: add change to route with userID for firebase 
+function addData(userID, sentimentScore, timeCheck){
+	var stringScore = "sentimentScore";
+	var timeString = "timeCheck"; 
+
+	var data = {
+		stringScore:sentimentScore, 
+		timeString:timeCheck
+	};
+
+	database.push(data); 
+}
+
+//based off userID 
 app.get("/getData/:userID", (request, response) => {
-	//Check the reference and then return the data.  
+	//Check the reference and then return the data.
+	var data = request.params; 
+
+	//go into firebase database and get the json corresponding
+
 
 });
 
