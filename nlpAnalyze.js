@@ -1,4 +1,4 @@
-authCloudExplicit();
+/*authCloudExplicit();
 
 function authCloudExplicit () {
   // [START auth_cloud_explicit]
@@ -9,7 +9,7 @@ function authCloudExplicit () {
   // specifying the private key file. All clients in google-cloud-node have this
   // helper, see https://github.com/GoogleCloudPlatform/google-cloud-node/blob/master/docs/authentication.md
   const storage = new Storage({
-    keyFilename: 'acumind-626605d17f79.json'
+    keyFilename: '../../acumind-626605d17f79.json'
   });
 
   // Makes an authenticated API request.
@@ -27,7 +27,7 @@ function authCloudExplicit () {
       console.error('ERROR:', err);
     });
   // [END auth_cloud_explicit]
-}
+}*/
 
 // Imports the Google Cloud client library
 const language = require('@google-cloud/language');
