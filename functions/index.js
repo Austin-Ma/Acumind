@@ -1,10 +1,3 @@
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
 //Express
 var express = require('express');
 var fs = require('fs');
@@ -16,11 +9,22 @@ app.use(bodyParser.json());
 
 //Firebase Functions (To host the nodejs on firebase server)
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp((functions.config().firebase));
+
 
 //Firebase Database 
 var firebase = require('firebase');
-var configFB = fs.readFileSync('configFB.json');
-configFB = JSON.parse(configFB);
+//var configFB = fs.readFileSync('../configFB.json');
+//configFB = JSON.parse(configFB);
+configFB = {
+    "apiKey": "AIzaSyB4PUAFq_N-I5Ewt6ThvLOF8Squ0tCV0_U",
+    "authDomain": "acumind-f0e34.firebaseapp.com",
+    "databaseURL": "https://acumind-f0e34.firebaseio.com",
+    "projectId": "acumind-f0e34",
+    "storageBucket": "acumind-f0e34.appspot.com",
+    "messagingSenderId": "1010008784476"
+  };
 
 var database = firebase.initializeApp(configFB).database();
 
@@ -34,23 +38,34 @@ var natural_language_understanding = new NaturalLanguageUnderstandingV1({
   "version": '2018-03-16'
 });
 
-app.listen(3000, (response) => {
-	console.log("Listening on port 3000");
-});
+//app.listen(3000, (response) => {
+//	console.log("Listening on port 3000");
+//});
 
 //Probly won't need a static bc its just a server 
-app.use(express.static('../no'));
+//app.use(express.static('../no'));
 
 //Definitely need to change this later; 
 //The current route is configured for a single tweet, 
 //Need to configure for an array; 
+
+exports.addMessage = functions.https.onRequest((req, res) => {
+  // Grab the text parameter.
+  const original = req.query.text;
+  // Push the new message into the Realtime Database using the Firebase Admin SDK.
+  return admin.database().ref('/messages').push({original: original}).then((snapshot) => {
+    // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+    return res.redirect(303, snapshot.ref);
+  });
+});
 
 app.post("/analyze", (request, response) => {
 	var score = 0; 
 	var data = requests.body; 
 	var text; 
 	var timeCheck = 0;
-	var userID = data[data.length].id;  
+	var arrayLength = data.length;
+	var userID = data[arrayLength].id;  
 
 	for(var i = 0; i < data.length-1; i++){
 		//Send to the router dealing w/ sentiment analysis 
@@ -67,7 +82,11 @@ app.post("/analyze", (request, response) => {
 		//TODO
 		//make sure to retrieve timestamp //data[i].created_at
 		//concatenate string to get time only
-		//timeAvg = 
+
+		//Fri Oct 20 09:08:07 +0000 2017
+
+		//concatenate string 
+		timeCheck = parseInt(data[i].created_at.substr(11)); 
 
 
 		// Detects the sentiment of the text
@@ -78,28 +97,24 @@ app.post("/analyze", (request, response) => {
 		  	// console.log((response.keyword.sentiment.score, null, 2));
 		  	score = score + response.keyword.sentiment.score; 
 		  	timeCheck = timeCheck + data[i].created_at; 
+
+		  	if(timeCheck >= 0 && timeCheck <= 4){
+		  		timeIndex++;
+				timeAvg = timeAvg + timeCheck; 
+			}
+
+
 		  }
 		});
-
-addData(userID, score, timeCheck); 
 }
 
+timeIndex = timeIndex/(data.length-1);
 
-
-timeCheck = timeCheck/(data.length-1); 
-
-//For loop to add sentimente score to JSON;
-
-
-	  	//Analysis Function, so call sentimentSum and timeCheck
-
-
-	 
-	//Add to the firebase server of the sentiment sum and the time stamp result
+addData(userID, score, timeIndex); 
 
 });
 
-//Analysis Functions
+/*//Analysis Functions
 function sentimentSum(tweetProfileArray){
 	//Sum up the overall scores?
 	var sentimentScore = "sentimentScore";
@@ -111,29 +126,28 @@ function sentimentSum(tweetProfileArray){
 			sentimentSum = sentimentSum + object[key];
 		}
 	}
-
 	return sentimentSum;
 }
+*/
 
 //Checking time stamp
-function timeCheck(tweetProfileArray){
-	//Compute the percentage of the amount of tweets in bad time
-	var timestamp = "timestamp";
-	var timeAvg = 0; 
-	for(var i = 0; i < tweetProfileArray.length; i++){
-		var object = tweetProfileArray[i];
-		for(var timestamp in object){
-			var timeInt = parseInt(object[key]); 
-			if(timeInt >= 0 && timeInt <= 4){
-				var key = timestamp;
-				timeAvg = timeAvg + timeInt; 
-			}
-		}
-	}
+// function timeCheck(tweetProfileArray){
+// 	//Compute the percentage of the amount of tweets in bad time
+// 	var timestamp = "timestamp";
+// 	var timeAvg = 0; 
+// 	for(var i = 0; i < tweetProfileArray.length; i++){
+// 		var object = tweetProfileArray[i];
+// 		for(var timestamp in object){
+// 			var timeInt = parseInt(object[key]); 
+// 			if(timeInt >= 0 && timeInt <= 4){
+// 				var key = timestamp;
+// 				timeAvg = timeAvg + timeInt; 
+// 			}
+// 		}
+// 	}
 
-	return timeAvg / tweetProfileArray.length;
-}
-
+// 	return timeAvg / tweetProfileArray.length;
+// }
 // //Add the sentiment/timeAvg result to the database
 // app.get("/addData/:userID/:sentimentTotal/:timeCheck", (request, response) => {
 // 	var sentimentTotal = sentimentSum(tweetProfileArray); 
@@ -156,13 +170,18 @@ function addData(userID, sentimentScore, timeCheck){
 	database.push(data); 
 }
 
-//based off userID 
 app.get("/getData/:userID", (request, response) => {
 	//Check the reference and then return the data.
 	var data = request.params; 
+	var userID = data.userID; 
 
 	//go into firebase database and get the json corresponding
+	var ref = database.reference("/" + userID); 
 
+	ref.on("value", (data) => { 
+		var userData = data.val();
+		response.send(userData);
+	 }, errData);
 
 });
 
@@ -170,6 +189,15 @@ app.get("/getData/:userID", (request, response) => {
 app.get("/clearData", (request, response) => {
 	var reference = database.ref('/');
 	reference.remove();
+});
+
+app.get("/sham", (request, response) =>{
+	var stuff = {
+		"score": 100,
+		"name": "shannon"
+	}
+
+	database.push(stuff);
 });
 
 exports.app = functions.https.onRequest(app);
