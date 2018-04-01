@@ -15,8 +15,6 @@ admin.initializeApp((functions.config().firebase));
 
 //Firebase Database 
 var firebase = require('firebase');
-//var configFB = fs.readFileSync('../configFB.json');
-//configFB = JSON.parse(configFB);
 configFB = {
     "apiKey": "AIzaSyB4PUAFq_N-I5Ewt6ThvLOF8Squ0tCV0_U",
     "authDomain": "acumind-f0e34.firebaseapp.com",
@@ -38,17 +36,6 @@ var natural_language_understanding = new NaturalLanguageUnderstandingV1({
   "version": '2018-03-16'
 });
 
-//app.listen(3000, (response) => {
-//	console.log("Listening on port 3000");
-//});
-
-//Probly won't need a static bc its just a server 
-//app.use(express.static('../no'));
-
-//Definitely need to change this later; 
-//The current route is configured for a single tweet, 
-//Need to configure for an array; 
-
 exports.addMessage = functions.https.onRequest((req, res) => {
   // Grab the text parameter.
   const original = req.query.text;
@@ -58,6 +45,26 @@ exports.addMessage = functions.https.onRequest((req, res) => {
     return res.redirect(303, snapshot.ref);
   });
 });
+
+// Listens for new messages added to /messages/:pushId/original and creates an
+// uppercase version of the message to /messages/:pushId/uppercase
+exports.makeUppercase = functions.database.ref('/messages/{pushId}/original').onWrite((event) => {
+  // Grab the current value of what was written to the Realtime Database.
+  const original = event.data.val();
+  console.log('Uppercasing', event.params.pushId, original);
+  const uppercase = original.toUpperCase();
+  // You must return a Promise when performing asynchronous tasks inside a Functions such as
+  // writing to the Firebase Realtime Database.
+  // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
+  return event.data.ref.parent.child('uppercase').set(uppercase);
+});
+
+//Clear the tree for the next user 
+exports.clearData = functions.https.onRequest((req, res) => {
+	console.log("Removing all Data");
+	return admin.database().ref('/').remove();
+})
+
 
 app.post("/analyze", (request, response) => {
 	var score = 0; 
@@ -79,15 +86,7 @@ app.post("/analyze", (request, response) => {
 			}
 		};
 
-		//TODO
-		//make sure to retrieve timestamp //data[i].created_at
-		//concatenate string to get time only
-
-		//Fri Oct 20 09:08:07 +0000 2017
-
-		//concatenate string 
 		timeCheck = parseInt(data[i].created_at.substr(11)); 
-
 
 		// Detects the sentiment of the text
 		natural_language_understanding.analyze(documents, (err, response) => {
@@ -113,49 +112,6 @@ timeIndex = timeIndex/(data.length-1);
 addData(userID, score, timeIndex); 
 
 });
-
-/*//Analysis Functions
-function sentimentSum(tweetProfileArray){
-	//Sum up the overall scores?
-	var sentimentScore = "sentimentScore";
-	var sentimentSum = 0; 
-	for(var i = 0; i < tweetProfileArray.length; i++){
-		var object = tweetProfileArray[i];
-		for(var sentimentScore in object){
-			var key = sentimentScore;
-			sentimentSum = sentimentSum + object[key];
-		}
-	}
-	return sentimentSum;
-}
-*/
-
-//Checking time stamp
-// function timeCheck(tweetProfileArray){
-// 	//Compute the percentage of the amount of tweets in bad time
-// 	var timestamp = "timestamp";
-// 	var timeAvg = 0; 
-// 	for(var i = 0; i < tweetProfileArray.length; i++){
-// 		var object = tweetProfileArray[i];
-// 		for(var timestamp in object){
-// 			var timeInt = parseInt(object[key]); 
-// 			if(timeInt >= 0 && timeInt <= 4){
-// 				var key = timestamp;
-// 				timeAvg = timeAvg + timeInt; 
-// 			}
-// 		}
-// 	}
-
-// 	return timeAvg / tweetProfileArray.length;
-// }
-// //Add the sentiment/timeAvg result to the database
-// app.get("/addData/:userID/:sentimentTotal/:timeCheck", (request, response) => {
-// 	var sentimentTotal = sentimentSum(tweetProfileArray); 
-// 	var timeCheck = timeCheck(tweetProfileArray); 
-
-// 	var result = [sentimentTotal, timeCheck]; 
-// 	database.push(result); 
-// });
 
 //TODO: add change to route with userID for firebase 
 function addData(userID, sentimentScore, timeCheck){
@@ -185,11 +141,11 @@ app.get("/getData/:userID", (request, response) => {
 
 });
 
-//Clear the tree for the next user 
-app.get("/clearData", (request, response) => {
-	var reference = database.ref('/');
-	reference.remove();
-});
+// //Clear the tree for the next user 
+// app.get("/clearData", (request, response) => {
+// 	var reference = database.ref('/');
+// 	reference.remove();
+// });
 
 app.get("/sham", (request, response) =>{
 	var stuff = {
