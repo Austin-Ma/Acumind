@@ -1,22 +1,20 @@
-.social-media {
-  margin-top: 50px;
-}
-
 .social-media-container {
   background-color: #7fffd4;
-  padding: 10px 0;
+
+  margin-bottom: 50px;
 }
 
-.twitter {
-  float: right;
-  margin: 5px 20px 20px 20px;
+.acumind {
+  height: 70px;
+  margin: 0 0 20px;
 }
 
 .header {
+  margin: -80px 0 -60px 0px;
   text-align: center;
-  margin: 10px 0 0 70px;
 }
 
-h3 {
-  text-align: center;
+button {
+  float: right;
+  margin: 20px;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Results.css';
 
-import twitterLogo from '../../assets/twitter.svg';
+import acumindLogo from '../../assets/acumind-logo.png';
 
 import {
   Row,
@@ -21,13 +21,14 @@ class Results extends Component {
     return (
       <div>
         <div className="social-media-container clearfix">
-          <img className="twitter" src={twitterLogo} alt="twitter logo" />
-          <h1 className="header">Accumind</h1>
+          <img className="acumind" src={acumindLogo} alt="acumind logo" />
+          <h1 className="header">Results</h1>
+          <div className="signout">
+            <Button outline color="info">
+              Sign Out
+            </Button>{' '}
+          </div>
         </div>
-
-        <Jumbotron>
-          <h3 className="results">Results</h3>
-        </Jumbotron>
 
         <Container>
           <Row>
@@ -45,7 +46,7 @@ class Results extends Component {
             </Col>
             <Col xs="4">
               <NewCard
-                cardImgSrc="https://placeimg.com/640/480/tech"
+                cardImgSrc="https://i.imgur.com/QnzBASD.png"
                 cardTitle="Altruism"
               />
             </Col>
