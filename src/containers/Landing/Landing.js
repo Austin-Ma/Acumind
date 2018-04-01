@@ -75,12 +75,13 @@ class Landing extends Component {
                 Estimating your mental health through your online presence.
               </p>
             </div>
+            <div className="button-container">
+              <Button color="primary" onClick={() => {this.authenticate()}}>Check My Mental Health</Button>
+            </div>
           </Container>
         </Jumbotron>
 
-        <div className="button-container">
-          <Button color="primary" onClick={() => {this.authenticate()}}>Check My Mental Health</Button>
-        </div>
+
       </div>
     );
   }
