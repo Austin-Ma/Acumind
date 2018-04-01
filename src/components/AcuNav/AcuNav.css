@@ -1,6 +1,12 @@
-
 .navbar {
-  background-color: aquamarine;
+  background-color: #7fffd4;
+  color: #414141;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.navbar-brand {
+  margin-top: 15px;
 }
 
 .logo {
