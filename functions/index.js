@@ -177,6 +177,7 @@ app.get("/clearData", (request, response) => {
 	reference.remove();
 });
 
+
 exports.app = functions.https.onRequest(app);
 
 
