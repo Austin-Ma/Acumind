@@ -50,8 +50,13 @@ app.post("/analyze", (request, response) => {
 	var data = requests.body; 
 	var text; 
 	var timeCheck = 0;
+<<<<<<< HEAD
 	var arrayLength = data.length;
 	var userID = data[arrayLength].id;  
+=======
+	var userID = data[data.length].id;  
+	var timeIndex = 0; 
+>>>>>>> d646c2746e7a54fdd95b17731d4aaa8b389cc461
 
 	for(var i = 0; i < data.length-1; i++){
 		//Send to the router dealing w/ sentiment analysis 
@@ -68,7 +73,11 @@ app.post("/analyze", (request, response) => {
 		//TODO
 		//make sure to retrieve timestamp //data[i].created_at
 		//concatenate string to get time only
-		//timeAvg = 
+
+		//Fri Oct 20 09:08:07 +0000 2017
+
+		//concatenate string 
+		timeCheck = parseInt(data[i].created_at.substr(11)); 
 
 
 		// Detects the sentiment of the text
@@ -79,24 +88,20 @@ app.post("/analyze", (request, response) => {
 		  	// console.log((response.keyword.sentiment.score, null, 2));
 		  	score = score + response.keyword.sentiment.score; 
 		  	timeCheck = timeCheck + data[i].created_at; 
+
+		  	if(timeCheck >= 0 && timeCheck <= 4){
+		  		timeIndex++;
+				timeAvg = timeAvg + timeCheck; 
+			}
+
+
 		  }
 		});
-
-addData(userID, score, timeCheck); 
 }
 
+timeIndex = timeIndex/(data.length-1);
 
-
-timeCheck = timeCheck/(data.length-1); 
-
-//For loop to add sentimente score to JSON;
-
-
-	  	//Analysis Function, so call sentimentSum and timeCheck
-
-
-	 
-	//Add to the firebase server of the sentiment sum and the time stamp result
+addData(userID, score, timeIndex); 
 
 });
 
@@ -112,7 +117,6 @@ function sentimentSum(tweetProfileArray){
 			sentimentSum = sentimentSum + object[key];
 		}
 	}
-
 	return sentimentSum;
 }
 */
@@ -135,7 +139,6 @@ function sentimentSum(tweetProfileArray){
 
 // 	return timeAvg / tweetProfileArray.length;
 // }
-
 // //Add the sentiment/timeAvg result to the database
 // app.get("/addData/:userID/:sentimentTotal/:timeCheck", (request, response) => {
 // 	var sentimentTotal = sentimentSum(tweetProfileArray); 
