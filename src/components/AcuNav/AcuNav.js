@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Navbar, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import './AcuNav.css';
 
-import twitterLogo from '../../assets/twitter.svg';
+import logo from '../../assets/acumind-logo.png';
 
 class AcuNav extends Component {
   constructor(props) {
@@ -15,10 +15,10 @@ class AcuNav extends Component {
       <NavbarBrand>Acumind</NavbarBrand>
       <Nav className="mx-auto logo" navbar>
         <NavItem>
-          <img className="twitter" src={twitterLogo} alt="Twitter" />
+          <img className="logo" src={logo} alt="Twitter" />
         </NavItem>
       </Nav>
-      <Nav className="ml-auto" navbar>
+      <Nav className="ml-md-auto" navbar>
         <NavItem>
           {(this.props.isResultsPage) ? <Button outline color="danger" onClick={this.props.onClick}>Log Out</Button> : <Button outline color="primary" onClick={this.props.onClick}>Get Started</Button>}
         </NavItem>

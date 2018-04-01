@@ -1,9 +1,10 @@
 
 .navbar {
-    background-color: aquamarine;
-  }
+  background-color: aquamarine;
+}
 
 .logo {
-    position: absolute;
-    left: 49%;
-  }
+  height: 85px;
+  position: absolute;
+  left: 47%;
+}
