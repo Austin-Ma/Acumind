@@ -1,6 +1,32 @@
+.social-media {
+  margin-top: 50px;
+}
+
+.social-media-container {
+  background-color: aquamarine;
+}
+
 .twitter {
   height: 25px;
+  float: right;
+  margin: 20px;
 }
-h1 {
+
+.description > .lead {
+  font-size: 12px;
+  text-align: center;
+}
+
+.main-title-container {
+  margin: 20px auto;
+}
+.main-title {
+  margin: 0 auto;
+  width: 40%;
+  border-left: 3px solid black;
+  border-right: 3px solid black;
+}
+
+.button-container {
   text-align: center;
 }
