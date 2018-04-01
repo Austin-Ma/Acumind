@@ -76,7 +76,7 @@ class Landing extends Component {
             </div>
             <br />
             <div className="button-container">
-              <Button color="primary" size="lg" onClick={() => {this.authenticate()}}>
+              <Button color="info" size="lg" onClick={() => {this.authenticate()}}>
                 <img className="twitter" src={twitterWhite} alt="Twitter" />
                 Login with Twitter
               </Button>

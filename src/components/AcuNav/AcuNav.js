@@ -20,7 +20,7 @@ class AcuNav extends Component {
       </Nav>
       <Nav className="ml-md-auto" navbar>
         <NavItem>
-          {(this.props.isResultsPage) ? <Button outline color="danger" onClick={this.props.onClick}>Log Out</Button> : <Button outline color="primary" onClick={this.props.onClick}>Get Started</Button>}
+          {(this.props.isResultsPage) ? <Button outline color="danger" onClick={this.props.onClick}>Log Out</Button> : <Button outline color="info" onClick={this.props.onClick}>Get Started</Button>}
         </NavItem>
       </Nav>
     </Navbar>
