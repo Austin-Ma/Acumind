@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Button, ButtonGroup, Container } from 'reactstrap';
 
 import twitterLogo from '../../assets/twitter.svg';
 
@@ -11,11 +11,11 @@ class Landing extends Component {
     return (
       <div>
         <div className="social-media-container clearfix">
-          <img className="twitter" src={twitterLogo} alt="" />
+          <img className="twitter" src={twitterLogo} alt="twitter logo" />
         </div>
 
         <div className="main-title-container">
-          <h1 className="main-title text-center ">Accumind</h1>
+          <h1 className="main-title text-center ">Acumind</h1>
         </div>
 
         <div>
@@ -29,9 +29,16 @@ class Landing extends Component {
           </Container>
         </div>
 
-        <div className="button-container">
-          <Button color="primary">Login to Twitter</Button>
-        </div>
+        <Link to="/results">
+          <div className="login-button">
+            <ButtonGroup>
+              <Button color="primary">
+                <i className="fab fa-twitter" />
+              </Button>
+              <Button color="primary">Login with Twitter</Button>
+            </ButtonGroup>
+          </div>
+        </Link>
       </div>
     );
   }
