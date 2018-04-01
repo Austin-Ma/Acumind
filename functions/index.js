@@ -51,6 +51,7 @@ app.post("/analyze", (request, response) => {
 	var text; 
 	var timeCheck = 0;
 	var userID = data[data.length].id;  
+	var timeIndex = 0; 
 
 	for(var i = 0; i < data.length-1; i++){
 		//Send to the router dealing w/ sentiment analysis 
@@ -67,7 +68,11 @@ app.post("/analyze", (request, response) => {
 		//TODO
 		//make sure to retrieve timestamp //data[i].created_at
 		//concatenate string to get time only
-		//timeAvg = 
+
+		//Fri Oct 20 09:08:07 +0000 2017
+
+		//concatenate string 
+		timeCheck = parseInt(data[i].created_at.substr(11)); 
 
 
 		// Detects the sentiment of the text
@@ -78,15 +83,23 @@ app.post("/analyze", (request, response) => {
 		  	// console.log((response.keyword.sentiment.score, null, 2));
 		  	score = score + response.keyword.sentiment.score; 
 		  	timeCheck = timeCheck + data[i].created_at; 
+
+		  	if(timeCheck >= 0 && timeCheck <= 4){
+		  		timeIndex++;
+				timeAvg = timeAvg + timeCheck; 
+			}
+
+
 		  }
 		});
-
-addData(userID, score, timeCheck); 
 }
 
 
 
-timeCheck = timeCheck/(data.length-1); 
+timeIndex = timeIndex/(data.length-1);
+
+addData(userID, score, timeIndex); 
+
 
 //For loop to add sentimente score to JSON;
 
@@ -111,7 +124,6 @@ function sentimentSum(tweetProfileArray){
 			sentimentSum = sentimentSum + object[key];
 		}
 	}
-
 	return sentimentSum;
 }
 
@@ -125,7 +137,7 @@ function timeCheck(tweetProfileArray){
 		for(var timestamp in object){
 			var timeInt = parseInt(object[key]); 
 			if(timeInt >= 0 && timeInt <= 4){
-				var key = timestamp;
+				var key = timestamp; //shannon wyd
 				timeAvg = timeAvg + timeInt; 
 			}
 		}
