@@ -1,10 +1,3 @@
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
 //Express
 var express = require('express');
 var fs = require('fs');
@@ -16,11 +9,20 @@ app.use(bodyParser.json());
 
 //Firebase Functions (To host the nodejs on firebase server)
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp((functions.config().firebase));
+
 
 //Firebase Database 
 var firebase = require('firebase');
-var configFB = fs.readFileSync('configFB.json');
-configFB = JSON.parse(configFB);
+configFB = {
+    "apiKey": "AIzaSyB4PUAFq_N-I5Ewt6ThvLOF8Squ0tCV0_U",
+    "authDomain": "acumind-f0e34.firebaseapp.com",
+    "databaseURL": "https://acumind-f0e34.firebaseio.com",
+    "projectId": "acumind-f0e34",
+    "storageBucket": "acumind-f0e34.appspot.com",
+    "messagingSenderId": "1010008784476"
+  };
 
 var database = firebase.initializeApp(configFB).database();
 
@@ -34,31 +36,62 @@ var natural_language_understanding = new NaturalLanguageUnderstandingV1({
   "version": '2018-03-16'
 });
 
-app.listen(3000, (response) => {
-	console.log("Listening on port 3000");
+exports.addMessage = functions.https.onRequest((req, res) => {
+  // Grab the text parameter.
+  const original = req.query.text;
+  // Push the new message into the Realtime Database using the Firebase Admin SDK.
+  return admin.database().ref('/messages').push({original: original}).then((snapshot) => {
+    // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+    return res.redirect(303, snapshot.ref);
+  });
 });
 
-//Probly won't need a static bc its just a server 
-app.use(express.static('../no'));
+// Listens for new messages added to /messages/:pushId/original and creates an
+// uppercase version of the message to /messages/:pushId/uppercase
+exports.makeUppercase = functions.database.ref('/messages/{pushId}/original').onWrite((event) => {
+  // Grab the current value of what was written to the Realtime Database.
+  const original = event.data.val();
+  console.log('Uppercasing', event.params.pushId, original);
+  const uppercase = original.toUpperCase();
+  // You must return a Promise when performing asynchronous tasks inside a Functions such as
+  // writing to the Firebase Realtime Database.
+  // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
+  return event.data.ref.parent.child('uppercase').set(uppercase);
+});
 
-//Definitely need to change this later; 
-//The current route is configured for a single tweet, 
-//Need to configure for an array; 
+exports.addData = functions.database.ref('/userID/{id}/{timeScore}/{sentimentScore}').onWrite((event) => {
+	var userVal = {
+		"timeCheck": events.params.timeScore,
+		"sentiment": events.params.sentimentScore
+	}
 
-app.post("/analyze", (request, response) => {
+	return admin.database().ref("/userID/" + events.params.id + "/").push(userVal);
+})
+
+exports.getData = functions.database.ref("/getData/{userID}").onWrite((event) => {
+	//Check the reference and then return the data.
+	var userID = event.params.userID; 
+
+	admin.database().ref("/userID/" + userID).on("value", (data) => {var object = data.val()
+		response.send(object);}, errData);
+});
+
+//Clear the tree for the next user 
+exports.clearData = functions.https.onRequest((req, res) => {
+	console.log("Removing all Data");
+	return admin.database().ref('/').remove();
+})
+
+
+exports.analyze = functions.https.onRequest((request, response) => {
 	var score = 0; 
 	var data = requests.body; 
 	var text; 
 	var timeCheck = 0;
-<<<<<<< HEAD
 	var arrayLength = data.length;
 	var userID = data[arrayLength].id;  
-=======
-	var userID = data[data.length].id;  
-	var timeIndex = 0; 
->>>>>>> d646c2746e7a54fdd95b17731d4aaa8b389cc461
 
-	for(var i = 0; i < data.length-1; i++){
+	for(var i = 0; i < data.length - 1; i++){
 		//Send to the router dealing w/ sentiment analysis 
 		var documents = {
 			'text': data[i].text, 
@@ -70,15 +103,7 @@ app.post("/analyze", (request, response) => {
 			}
 		};
 
-		//TODO
-		//make sure to retrieve timestamp //data[i].created_at
-		//concatenate string to get time only
-
-		//Fri Oct 20 09:08:07 +0000 2017
-
-		//concatenate string 
 		timeCheck = parseInt(data[i].created_at.substr(11)); 
-
 
 		// Detects the sentiment of the text
 		natural_language_understanding.analyze(documents, (err, response) => {
@@ -99,85 +124,21 @@ app.post("/analyze", (request, response) => {
 		});
 }
 
-timeIndex = timeIndex/(data.length-1);
+	timeIndex = timeIndex/(data.length-1);
 
-addData(userID, score, timeIndex); 
-
-});
-
-/*//Analysis Functions
-function sentimentSum(tweetProfileArray){
-	//Sum up the overall scores?
-	var sentimentScore = "sentimentScore";
-	var sentimentSum = 0; 
-	for(var i = 0; i < tweetProfileArray.length; i++){
-		var object = tweetProfileArray[i];
-		for(var sentimentScore in object){
-			var key = sentimentScore;
-			sentimentSum = sentimentSum + object[key];
-		}
-	}
-	return sentimentSum;
-}
-*/
-
-//Checking time stamp
-// function timeCheck(tweetProfileArray){
-// 	//Compute the percentage of the amount of tweets in bad time
-// 	var timestamp = "timestamp";
-// 	var timeAvg = 0; 
-// 	for(var i = 0; i < tweetProfileArray.length; i++){
-// 		var object = tweetProfileArray[i];
-// 		for(var timestamp in object){
-// 			var timeInt = parseInt(object[key]); 
-// 			if(timeInt >= 0 && timeInt <= 4){
-// 				var key = timestamp;
-// 				timeAvg = timeAvg + timeInt; 
-// 			}
-// 		}
-// 	}
-
-// 	return timeAvg / tweetProfileArray.length;
-// }
-// //Add the sentiment/timeAvg result to the database
-// app.get("/addData/:userID/:sentimentTotal/:timeCheck", (request, response) => {
-// 	var sentimentTotal = sentimentSum(tweetProfileArray); 
-// 	var timeCheck = timeCheck(tweetProfileArray); 
-
-// 	var result = [sentimentTotal, timeCheck]; 
-// 	database.push(result); 
-// });
-
-//TODO: add change to route with userID for firebase 
-function addData(userID, sentimentScore, timeCheck){
-	var stringScore = "sentimentScore";
-	var timeString = "timeCheck"; 
-
-	var data = {
-		stringScore:sentimentScore, 
-		timeString:timeCheck
+	var userInfo = {
+		"stringScore": score, 
+		"timeString": timeIndex
 	};
 
-	database.push(data); 
-}
-
-//based off userID 
-app.get("/getData/:userID", (request, response) => {
-	//Check the reference and then return the data.
-	var data = request.params; 
-
-	//go into firebase database and get the json corresponding
-
-
-});
-
-//Clear the tree for the next user 
-app.get("/clearData", (request, response) => {
-	var reference = database.ref('/');
-	reference.remove();
+	return admin.database().ref('/userID').push(userInfo).then((snapshot) => {
+    // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+    return res.redirect(303, snapshot.ref);
+  	});
 });
 
 
 exports.app = functions.https.onRequest(app);
+
 
 
