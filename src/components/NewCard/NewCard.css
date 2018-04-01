@@ -1,0 +1,24 @@
+.card-container {
+  position: relative;
+}
+
+.card-title,
+.card-text {
+  color: #000000;
+  position: absolute;
+  text-align: center;
+}
+
+.card-title {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+}
+
+Jumbotron {
+  background-color: transparent;
+  text-align: center;
+}
