@@ -27,6 +27,8 @@ class Results extends Component {
         console.log(error);
         // stuck forever in a loading screen :(
       })
+
+      this.handler = this.handler.bind(this);
   }
 
   logout() {
@@ -34,14 +36,26 @@ class Results extends Component {
     auth.logout();
   }
 
+  handler(num) {
+    this.setState({
+      onDisplay: num
+    });
+  }
+
   render() {
     var result;
     switch (this.state.onDisplay) {
-      case 0: result = <div><br /><Alert color="info">Click on any of the images to see a more detailed breakdown.</Alert></div>; break;
-      case 1: result = ""; break;
-      case 2: result = ""; break;
-      case 3: result = ""; break;
-      default: result = "";
+      case 1:
+        result = <div></div>;
+        break;
+      case 2:
+        result = <div></div>;
+        break;
+      case 3:
+        result = <div></div>;
+        break;
+      default:
+        result = <div><br /><Alert color="info">Click on any of the images to see a more detailed breakdown.</Alert></div>;
     }
 
     return (
@@ -63,6 +77,7 @@ class Results extends Component {
               <NewCard
                 cardImgSrc="https://i.imgur.com/U024Hop.png"
                 cardTitle="Personality Traits"
+                
               />
             </Col>
             <Col md="4">

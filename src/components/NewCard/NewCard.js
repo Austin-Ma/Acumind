@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardText, CardTitle, CardBody, Button, CardImgOverlay } from 'reactstrap';
 
 import './NewCard.css';
 
 class NewCard extends Component {
   render() {
     return (
-      <Card>
       <div className="card-container">
-        <CardImg top width="100%" src={this.props.cardImgSrc} alt="Card image cap" />
-        <h5 className="card-title">{this.props.cardTitle}</h5>
-        <p className="card-text">{this.props.cardText}</p>
+        <Card>
+          <CardImg top width="100%" className="image" src={this.props.cardImgSrc} alt={this.props.cardAlt} />
+          <CardBody>
+            <CardTitle>{this.props.cardTitle}</CardTitle>
+            <CardText>{this.props.cardText}</CardText>
+            <Button color="secondary" onClick={() => {this.props.handler(this.props.num)}}>Display</Button>
+          </CardBody>
+        </Card>
       </div>
-    </Card>
     )
   }
 }
