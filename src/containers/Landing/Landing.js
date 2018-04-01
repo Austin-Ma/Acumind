@@ -7,6 +7,8 @@ import './Landing.css';
 import Auth from '../../components/Auth/Auth.js';
 import AcuNav from '../../components/AcuNav/AcuNav.js';
 
+import twitterWhite from '../../assets/twitterwhite.svg';
+
 class Landing extends Component {
   constructor(props) {
     super(props);
@@ -74,7 +76,10 @@ class Landing extends Component {
             </div>
             <br />
             <div className="button-container">
-              <Button color="primary" size="lg" onClick={() => {this.authenticate()}}>Check My Mental Health</Button>
+              <Button color="primary" size="lg" onClick={() => {this.authenticate()}}>
+                <img className="twitter" src={twitterWhite} alt="Twitter" />
+                Login with Twitter
+              </Button>
             </div>
           </Container>
         </Jumbotron>

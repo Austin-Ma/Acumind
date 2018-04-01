@@ -2,20 +2,12 @@
   margin-top: 50px;
 }
 
-.navbar {
-  background-color: aquamarine;
-}
-
-.logo {
-  position: absolute;
-  left: 49%;
-}
-
 .twitter {
   height: 25px;
-  float: right;
-  margin: 0px 5px;
-  margin-right: 0px;
+  float: left;
+  margin: 0px 8px;
+  margin-top: 2px;
+  margin-left: 0px;
 }
 
 .description > .lead {
