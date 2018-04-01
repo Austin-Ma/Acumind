@@ -53,8 +53,6 @@ def get_data():
         #convert back to string
         #dict = json.dumps(dict)
 
-
-
     final_string = json.dumps(input_dict,indent=4, sort_keys=True)
     return (final_string)
 

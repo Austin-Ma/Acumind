@@ -12,13 +12,13 @@ class Results extends Component {
       isLoading: true // handles the displaying of the modal
     };
 
-    axios.get("https://acumind-f0e34.firebaseapp.com/getData/" + localStorage.getItem("user_id"))
+    axios.get("https://us-central1-acumind-f0e34.cloudfunctions.net/getDataAlt?userID=" + "orange"/*+ localStorage.getItem("user_id")*/)
       .then(res => {
         console.log(res.data);
-        this.state = {
+        this.setState({
           data: res.data,
           isLoading: false
-        };
+        });
       }).catch(error => {
         console.log(error);
         // stuck forever in a loading screen :(

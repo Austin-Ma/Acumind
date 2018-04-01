@@ -16,7 +16,7 @@
 }
 
 .description > .lead {
-  font-size: 12px;
+  font-size: 1.25rem;
   text-align: center;
 }
 
@@ -25,6 +25,7 @@
 }
 
 .main-title {
+  font-size: 4.5rem;
   margin: 0 auto;
   width: 40%;
   border-left: 3px solid black;

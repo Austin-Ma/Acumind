@@ -67,16 +67,16 @@ class Landing extends Component {
 
         <Jumbotron fluid>
           <Container fluid>
-            <div className="main-title-container">
-              <h1 className="main-title text-center">Acumind</h1>
-            </div>
+            <h1 className="main-title text-center">Acumind</h1>
+            <br />
             <div className="description">
               <p className="lead">
-                Estimating your mental health through your online presence.
+                Diagnosing your mental health through your online presence.
               </p>
             </div>
+            <br />
             <div className="button-container">
-              <Button color="primary" onClick={() => {this.authenticate()}}>Check My Mental Health</Button>
+              <Button color="primary" size="lg" onClick={() => {this.authenticate()}}>Check My Mental Health</Button>
             </div>
           </Container>
         </Jumbotron>
