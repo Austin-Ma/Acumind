@@ -14,20 +14,6 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp((functions.config().firebase));
 
-
-//Firebase Database 
-var firebase = require('firebase');
-configFB = {
-    "apiKey": "AIzaSyB4PUAFq_N-I5Ewt6ThvLOF8Squ0tCV0_U",
-    "authDomain": "acumind-f0e34.firebaseapp.com",
-    "databaseURL": "https://acumind-f0e34.firebaseio.com",
-    "projectId": "acumind-f0e34",
-    "storageBucket": "acumind-f0e34.appspot.com",
-    "messagingSenderId": "1010008784476"
-  };
-
-var database = firebase.initializeApp(configFB).database();
-
 //Ibm stuff 
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 //var ibmConfig = "ibmCredential.json";
@@ -61,14 +47,23 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original').on
   return event.data.ref.parent.child('uppercase').set(uppercase);
 });
 
-exports.addData = functions.database.ref('/userID/{id}/{timeScore}/{sentimentScore}').onWrite((event) => {
+// exports.addData = functions.https.onRequest((request, response) => {
+// 	var userVal = {
+// 		"timeCheck": request.params.timeScore,
+// 		"sentiment": request.params.sentimentScore
+// 	}
+
+// 	return admin.database().ref("/userID/" + request.params.id + "/").push(userVal);
+// });
+
+exports.addData = functions.database.ref('/addData/{id}/{timeScore}/{sentimentScore}').onWrite((event) => {
 	var userVal = {
 		"timeCheck": events.params.timeScore,
 		"sentiment": events.params.sentimentScore
 	}
 
-	return admin.database().ref("/userID/" + events.params.id + "/").push(userVal);
-})
+	return admin.database().ref("/" + events.params.id + "/").push(userVal);
+});
 
 exports.getData = functions.database.ref("/getData/{userID}").onWrite((event) => {
 	//Check the reference and then return the data.
