@@ -3,24 +3,9 @@
   float: bottom;
 }
 
-.card-img-overlay {
-  padding: 1.25rem;
-}
-
 .card-title,
 .card-text {
-  color: #000000;
-  position: absolute;
   text-align: center;
-}
-
-.card-title {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 0;
 }
 
 Jumbotron {

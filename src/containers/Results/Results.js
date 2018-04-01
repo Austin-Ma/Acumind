@@ -37,6 +37,7 @@ class Results extends Component {
   }
 
   handler(num) {
+    console.log(num)
     this.setState({
       onDisplay: num
     });
@@ -77,20 +78,25 @@ class Results extends Component {
               <NewCard
                 cardImgSrc="https://i.imgur.com/U024Hop.png"
                 cardTitle="Personality Traits"
-                
-              />
+                cardText="Testing"
+                handler={this.handler}
+                num={1} />
             </Col>
             <Col md="4">
               <NewCard
                 cardImgSrc="https://i.imgur.com/u12hID9.png"
                 cardTitle="Sentiment Analysis"
-              />
+                cardText="Testing"
+                handler={this.handler}
+                num={2} />
             </Col>
             <Col md="4">
               <NewCard
                 cardImgSrc="https://i.imgur.com/EYEzCsa.png"
                 cardTitle="Time-of-day Analysis"
-              />
+                cardText="Testing"
+                handler={this.handler}
+                num={3} />
             </Col>
           </Row>
 

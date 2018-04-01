@@ -8,7 +8,7 @@ class NewCard extends Component {
     return (
       <div className="card-container">
         <Card>
-          <CardImg top width="100%" className="image" src={this.props.cardImgSrc} alt={this.props.cardAlt} />
+          <CardImg src={this.props.cardImgSrc} alt={this.props.cardAlt} />
           <CardBody>
             <CardTitle>{this.props.cardTitle}</CardTitle>
             <CardText>{this.props.cardText}</CardText>
