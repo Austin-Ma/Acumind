@@ -1,0 +1,22 @@
+.social-media {
+  margin-top: 50px;
+}
+
+.social-media-container {
+  background-color: #7fffd4;
+  padding: 10px 0;
+}
+
+.twitter {
+  float: right;
+  margin: 5px 20px 20px 20px;
+}
+
+.header {
+  text-align: center;
+  margin: 10px 0 0 70px;
+}
+
+h3 {
+  text-align: center;
+}
