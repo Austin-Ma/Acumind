@@ -71,7 +71,7 @@ class Landing extends Component {
             <br />
             <div className="description">
               <p className="lead">
-                Diagnosing your mental health through your online presence.
+                Diagnosing your mental health by examining your online presence.
               </p>
             </div>
             <br />

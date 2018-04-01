@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Container, Jumbotron, Row, Col } from 'reactstrap';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 import './Results.css';
 
@@ -12,6 +13,7 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      onDisplay: 0, // handles what's being displayed
       isLoading: true // handles the displaying of the modal
     };
 
@@ -39,7 +41,7 @@ class Results extends Component {
       <div>
         <AcuNav isResultsPage={true} onClick={() => {this.logout()}} />
 
-        <Jumbotron>
+        <Jumbotron fluid className="results-jumbotron">
           <h3 className="results">Results</h3>
         </Jumbotron>
 
@@ -60,12 +62,18 @@ class Results extends Component {
             <Col xs="4">
               <NewCard
                 cardImgSrc="https://i.imgur.com/EYEzCsa.png"
-                cardTitle="Altruism"
+                cardTitle="Time-of-day Analysis"
               />
             </Col>
           </Row>
         </Container>
 
+        <div className="category-info">
+          {return (this.state.onDisplay === 0) ? "" : null}
+          {return (this.state.onDisplay === 1) ? "" : null}
+          {return (this.state.onDisplay === 2) ? "" : null}
+          {return (this.state.onDisplay === 3) ? "" : null}
+        </div>
         
       </div>
     )
