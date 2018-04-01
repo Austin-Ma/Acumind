@@ -3,9 +3,11 @@ var express = require('express');
 var fs = require('fs');
 var app = express(); 
 var bodyParser = require('body-parser');
+var cors = require('cors')({origin: true});
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(cors);
 
 //Firebase Functions (To host the nodejs on firebase server)
 const functions = require('firebase-functions');
@@ -132,4 +134,8 @@ exports.analyze = functions.https.onRequest((request, response) => {
   	});
 });
 
+
 exports.app = functions.https.onRequest(app);
+
+
+
