@@ -59,6 +59,17 @@ class Auth {
   login() {
     this.auth0.authorize();
   }
+
+  renewToken() {
+    this.auth0.checkSession({}, (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          this.setSession(result);
+        }
+      }
+    );
+  }
 }
 
 export default Auth;

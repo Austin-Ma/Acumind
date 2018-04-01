@@ -9,17 +9,18 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false // handles the displaying of the modal
+      isLoading: true // handles the displaying of the modal
     };
 
     axios.get("localhost:3000/getData/" + localStorage.getItem("twitter_accesstoken"))
       .then(res => {
         this.setState({
           data: res.data,
-          isLoading: true
+          isLoading: false
         });
       }).catch(error => {
         console.log(error);
+        
       })
   }
 

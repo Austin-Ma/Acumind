@@ -3,13 +3,16 @@
 }
 
 .social-media-container {
+  height: 3.5em;
   background-color: aquamarine;
+  padding: 0.5em;
 }
 
 .twitter {
   height: 25px;
   float: right;
-  margin: 20px;
+  margin: 0px 5px;
+  margin-right: 0px;
 }
 
 .description > .lead {
@@ -20,6 +23,7 @@
 .main-title-container {
   margin: 20px auto;
 }
+
 .main-title {
   margin: 0 auto;
   width: 40%;

@@ -5,10 +5,12 @@ import Landing from './containers/Landing/Landing.js';
 import Results from './containers/Results/Results.js';
 import Callback from './containers/Callback/Callback.js';
 
+import history from './history.js';
+
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div className="App">
           <Route exact path="/" component={Landing} />
           <Route path="/results" component={Results} />
