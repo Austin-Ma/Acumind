@@ -81,6 +81,8 @@ class Landing extends Component {
                 Login with Twitter
               </Button>
             </div>
+            <br />
+            <hr className="my-auto" />
           </Container>
         </Jumbotron>
 

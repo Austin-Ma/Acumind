@@ -16,7 +16,7 @@ class Results extends Component {
       isLoading: true // handles the displaying of the modal
     };
 
-    axios.get("https://us-central1-acumind-f0e34.cloudfunctions.net/getDataAlt?userID=" + "orange"/*+ localStorage.getItem("user_id")*/)
+    axios.get("https://us-central1-acumind-f0e34.cloudfunctions.net/getDataAlt?userID=" + localStorage.getItem("user_id"))
       .then(res => {
         console.log(res.data);
         this.setState({
@@ -47,16 +47,19 @@ class Results extends Component {
     var result;
     switch (this.state.onDisplay) {
       case 1: //personality traits 
-        result = <div><br /><Alert color="secondary">Some relevant personality traits that were detected include: sadness, fear, anxiety</Alert></div>;
+        result = <div><br /><Alert color="info">You seem to tend towards more negative thoughts in your tweets overall.
+        Remember to always think positive!</Alert></div>;
         break;
       case 2: ////sentiment analysis
-        result = <div><br /><Alert color="secondary">You seem to tend towards more negative thoughts in your tweets.</Alert></div>;
+        result = <div><br /><Alert color="danger">Some notable personality traits we detected include: <b>sadness, fear, anxiety</b>.
+        Consistently showing negative emotions like these could be a sign of possible depression.</Alert></div>;
         break;
       case 3:////timestamp 
-        result = <div><br /><Alert color="secondary">You appear to be most active around <b>3 am</b>.</Alert></div>;
+        result = <div><br /><Alert color="warning">You appear to be most active around <b>3 am</b> and least active around <b>6 am</b>.
+        Try not to stay up late on a consistent basis.</Alert></div>;
         break;
       default:
-        result = <div><br /><Alert color="info">Click on any of the images to see a more detailed breakdown.</Alert></div>;
+        result = <div><br /><Alert color="info">Click on any of the buttons above to see a more detailed breakdown.</Alert></div>;
     }
 
     return (
@@ -79,7 +82,7 @@ class Results extends Component {
               <NewCard
                 cardImgSrc="https://i.imgur.com/U024Hop.png"
                 cardTitle="Personality Traits"
-                cardText="Testing"
+                cardText="What type of personality do you show online?"
                 handler={this.handler}
                 num={1} />
             </Col>
@@ -87,7 +90,7 @@ class Results extends Component {
               <NewCard
                 cardImgSrc="https://i.imgur.com/u12hID9.png"
                 cardTitle="Sentiment Analysis"
-                cardText="Testing"
+                cardText="What is the overall tone of your tweets? Are you more high-strung and easy to anger, or are you emotionally balanced?"
                 handler={this.handler}
                 num={2} />
             </Col>
@@ -95,7 +98,7 @@ class Results extends Component {
               <NewCard
                 cardImgSrc="https://i.imgur.com/EYEzCsa.png"
                 cardTitle="Time-of-day Analysis"
-                cardText="Testing"
+                cardText="When are you usually online? Are you a night owl?"
                 handler={this.handler}
                 num={3} />
             </Col>
