@@ -1,0 +1,14 @@
+.card-container Button {
+  width: 100%;
+  float: bottom;
+}
+
+.card-title,
+.card-text {
+  text-align: center;
+}
+
+Jumbotron {
+  background-color: transparent;
+  text-align: center;
+}

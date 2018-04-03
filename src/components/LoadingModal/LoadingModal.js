@@ -5,10 +5,6 @@ import './LoadingModal.css';
 import loadIcon from "../../assets/loadicon.svg";
 
 class LoadingModal extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   getMessage() {
     return "Please be patient as we analyze your data.";
   }

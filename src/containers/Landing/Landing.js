@@ -1,15 +1,42 @@
 import React, { Component } from 'react';
-import { Button, Container } from 'reactstrap';
+import { Button, Container, Jumbotron, Navbar, Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import './Landing.css';
 
-import twitterLogo from '../../assets/twitter.svg';
 //import axios from 'axios';
 import Auth from '../../components/Auth/Auth.js';
+import AcuNav from '../../components/AcuNav/AcuNav.js';
+
+import twitterWhite from '../../assets/twitterwhite.svg';
 
 class Landing extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false
+    }
+  }
+
   authenticate() {
     const auth = new Auth();
-    auth.login();
+    if (localStorage.getItem("auth0_accesstoken") === null) {
+      // first time login
+      console.log("first time login");
+      auth.login();
+    } else if (!auth.isAuthenticated()) {
+      // access token exists but has expired, so renew
+      console.log("renew token");
+      auth.renewToken();
+      this.setState({
+        isLoggedIn: true
+      })
+    } else {
+      // access token is valid; skip directly to result page
+      console.log("valid token");
+      this.setState({
+        isLoggedIn: true
+      })
+    }
 
     /*
     console.log("hi")
@@ -33,33 +60,42 @@ class Landing extends Component {
   }
 
   render() {
-    return (
+    if (this.state.isLoggedIn) return (<Redirect to="/results" />)
+    else return (
       <div>
-        <div className="social-media-container clearfix">
-          <img className="twitter" src={twitterLogo} alt="" />
-        </div>
+        <AcuNav isResultsPage={false} onClick={() => {this.authenticate()}}/>
 
-        <div className="main-title-container">
-          <h1 className="main-title text-center ">Accumind</h1>
-        </div>
-
-        <div>
+        <Jumbotron fluid>
           <Container fluid>
+            <h1 className="main-title text-center">Acumind</h1>
+            <br />
             <div className="description">
               <p className="lead">
-                A chat visualizer generating data visualization and gives mental
-                health results.
+                Diagnosing your mental health by examining your online presence.
               </p>
             </div>
+            <br />
+            <div className="button-container">
+              <Button color="info" size="lg" onClick={() => {this.authenticate()}}>
+                <img className="twitter" src={twitterWhite} alt="Twitter" />
+                Login with Twitter
+              </Button>
+            </div>
+            <br />
+            <hr className="my-auto" />
           </Container>
-        </div>
+        </Jumbotron>
 
-        <div className="button-container">
-          <Button color="primary" onClick={() => {this.authenticate()}}>Login to Twitter</Button>
-        </div>
+
       </div>
     );
   }
 }
 
 export default Landing;
+
+/*
+          <Button color="primary" onClick={() => {this.authenticate()}}>
+            <img className="twitter" src={twitterLogo} alt="Twitter" />
+            Login to Twitter
+          </Button>*/
